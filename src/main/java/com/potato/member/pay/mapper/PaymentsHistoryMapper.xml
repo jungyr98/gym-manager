@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "file:///D:/eclipse-workspace/gym-manager-backend/src/main/resources/mybatis-3-mapper.dtd" >
+<mapper namespace="com.potato.member.pay.mapper.PaymentsHistoryMapper">
+
+	<!-- 검색 조건 -->
+	<sql id="search">
+		<if test="phName != null and !phName.isEmpty()">
+			and PH.ph_name like concat('%', lower(trim(#{phName})), '%')
+		</if>
+		<if test="memberName != null and !memberName.isEmpty()">
+			and PH.member_name like concat('%', lower(trim(#{memberName})), '%')
+		</if>
+		<if test="regDate != null and !regDate.isEmpty()">
+			and PH.reg_date = #{regDate}
+		</if>
+	</sql>
+
+	<!-- 목록 개수 조회 -->
+	<select id="getListCnt">
+		select count(*)
+		from payments_history PH
+		<where>
+			<include refid="search" />
+		</where>
+	</select>
+
+	<!-- 목록 조회 -->
+	<select id="selectList" resultType="com.potato.member.pay.vo.PaymentsHistoryVO">
+		select PH.ph_seq
+			 , PH.ph_type
+			 , PH.ph_price
+			 , PH.ph_name
+			 , PH.member_seq
+			 , PH.member_name
+			 , PH.membership_seq
+			 , MS.membership_name
+			 , PH.reg_date
+		from payments_history PH
+		left join membership MS on MS.membership_seq = PH.membership_seq
+		<where>
+			<include refid="search" />
+		</where>
+		order by PH.reg_date desc
+		<include refid="com.potato.core.common.mapper.CommonMapper.queryForPagingFooter" />
+	</select>
+
+	<!-- 요일별 결제 내역 -->
+	<select id="selectWeekList" resultType="com.potato.member.pay.vo.PaymentsHistoryVO">
+		select *
+		from payments_history
+		where date_format(reg_date, '%Y-%m-%d')
+			between (SELECT ADDDATE(CURDATE(), - WEEKDAY(CURDATE()) + 0 ))
+			AND (SELECT ADDDATE(CURDATE(), - WEEKDAY(CURDATE()) + 6 ))
+		order by reg_date desc
+	</select>
+
+</mapper>

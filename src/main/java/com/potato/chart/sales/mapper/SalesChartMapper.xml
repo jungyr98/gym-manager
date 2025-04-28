@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "file:///D:/eclipse-workspace/gym-manager-backend/src/main/resources/mybatis-3-mapper.dtd" >
+<mapper namespace="com.potato.chart.sales.mapper.SalesChartMapper">
+
+	<!-- 년도별 월별 매출 통계 -->
+	<select id="selectMonthList" resultType="com.potato.chart.sales.vo.SalesChartVO">
+		WITH months AS (
+		    SELECT '01' AS reg_month
+		    UNION ALL SELECT '02'
+		    UNION ALL SELECT '03'
+		    UNION ALL SELECT '04'
+		    UNION ALL SELECT '05'
+		    UNION ALL SELECT '06'
+		    UNION ALL SELECT '07'
+		    UNION ALL SELECT '08'
+		    UNION ALL SELECT '09'
+		    UNION ALL SELECT '10'
+		    UNION ALL SELECT '11'
+		    UNION ALL SELECT '12'
+		)
+		SELECT
+		    m.reg_month,
+		    COALESCE(SUM(PH.ph_price), 0) AS total_price
+		FROM months m
+		LEFT JOIN payments_history PH
+		    ON DATE_FORMAT(PH.reg_date, '%m') = m.reg_month
+		    AND DATE_FORMAT(PH.reg_date, '%Y') = #{year}
+		GROUP BY m.reg_month
+		ORDER BY m.reg_month
+	</select>
+
+	<!-- 회원권 별 매출 통계 -->
+	<select id="selectMembershipList" resultType="com.potato.chart.sales.vo.SalesChartVO">
+		select MS.membership_seq
+			 , MS.membership_name
+		     , case
+		        when sum(ph_price) is null then 0
+		     	else sum(PH.ph_price)
+		       end as total_price
+		from membership MS
+		 left join payments_history PH on PH.membership_seq = MS.membership_seq
+		where YEAR(PH.reg_date) = #{year}
+		group by MS.membership_seq
+			   , MS.membership_name
+		       , PH.ph_price
+	</select>
+
+	<!-- 연령별 매출 통계 -->
+	<select id="selectAgeList" resultType="com.potato.chart.sales.vo.SalesChartVO">
+		select case when age <![CDATA[<]]> 20 then '10대'
+					when age between 20 and 29 then '20대'
+		            when age between 30 and 39 then '30대'
+		            when age between 40 and 49 then '40대'
+		            when age between 50 and 59 then '50대'
+		            when age <![CDATA[>=]]> 60 then '60대'
+			   end as age_group
+			 , sum(sum_price) as total_price
+		from (
+			select WM.member_name
+				 , YEAR(NOW())-LEFT(WM.member_birth, 4) as age
+				 , SUM(PH.ph_price) as sum_price
+			from payments_history PH
+			left join workplace_member WM on WM.member_seq = PH.member_seq
+			where YEAR(PH.reg_date) = #{year}
+			group by WM.member_seq
+				   , WM.member_name
+				   , WM.member_birth
+			order by age
+		) A
+		group by age_group
+	</select>
+
+</mapper>

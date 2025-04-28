@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "file:///D:/eclipse-workspace/gym-manager-backend/src/main/resources/mybatis-3-mapper.dtd" >
+<mapper namespace="com.potato.visit.mapper.VisitMapper">
+
+	<!-- 이번주 방문 목록 -->
+	<select id="selectVisitWeekList" resultType="com.potato.visit.vo.VisitHistoryVO">
+		select *
+		from visit_history
+		where date_format(reg_date, '%Y-%m-%d')
+			between (SELECT ADDDATE(CURDATE(), - WEEKDAY(CURDATE()) + 0 ))
+			AND (SELECT ADDDATE(CURDATE(), - WEEKDAY(CURDATE()) + 6 ))
+	</select>
+
+</mapper>

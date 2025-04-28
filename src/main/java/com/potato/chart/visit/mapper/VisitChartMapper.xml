@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "file:///D:/eclipse-workspace/gym-manager-backend/src/main/resources/mybatis-3-mapper.dtd" >
+<mapper namespace="com.potato.chart.visit.mapper.VisitChartMapper">
+
+	<select id="selectList" resultType="com.potato.chart.visit.vo.VisitChartVO">
+		WITH weekDays AS (
+		    SELECT 0 AS weekIndex, '월요일' AS weekDay
+		    UNION ALL
+		    SELECT 1, '화요일'
+		    UNION ALL
+		    SELECT 2, '수요일'
+		    UNION ALL
+		    SELECT 3, '목요일'
+		    UNION ALL
+		    SELECT 4, '금요일'
+		    UNION ALL
+		    SELECT 5, '토요일'
+		    UNION ALL
+		    SELECT 6, '일요일'
+		)
+		SELECT
+		    wd.weekDay,
+		    wd.weekIndex,
+		    COALESCE(vh.visitCount, 0) AS visitCount
+		FROM weekDays wd
+		LEFT JOIN (
+		    SELECT
+		        weekday(reg_date) AS weekIndex,
+		        COUNT(*) AS visitCount
+		    FROM visit_history
+		    WHERE date_format(reg_date, '%Y-%m-%d') BETWEEN
+		        (SELECT ADDDATE(CURDATE(), - WEEKDAY(CURDATE())))
+		        AND
+		        (SELECT ADDDATE(CURDATE(), - WEEKDAY(CURDATE()) + 6))
+		    GROUP BY weekIndex
+		) vh ON wd.weekIndex = vh.weekIndex
+		ORDER BY wd.weekIndex
+	</select>
+
+</mapper>

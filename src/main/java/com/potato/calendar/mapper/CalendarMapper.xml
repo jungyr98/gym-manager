@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "file:///D:/eclipse-workspace/gym-manager-backend/src/main/resources/mybatis-3-mapper.dtd" >
+<mapper namespace="com.potato.calendar.mapper.CalendarMapper">
+
+	<!-- 검색 조건 -->
+	<sql id="search">
+		wp_seq = #{wpSeq}
+	</sql>
+
+	<!-- 목록 조회 -->
+	<select id="selectList" resultType="com.potato.calendar.vo.CalendarVO">
+		select cl_seq
+			 , wp_seq
+			 , cl_type
+			 , cl_content
+			 , cl_memo
+			 , reg_id
+			 , date_format(reg_date, '%Y-%m-%d') as reg_date
+		from calendar
+		<where>
+			<include refid="search" />
+		</where>
+	</select>
+
+	<!-- 이번주 일정 목록 조회 -->
+	<select id="selectWeekList" resultType="com.potato.calendar.vo.CalendarVO">
+		select cl_seq
+			 , wp_seq
+			 , cl_type
+			 , cl_content
+			 , cl_memo
+			 , reg_id
+			 , date_format(reg_date, '%Y-%m-%d') as reg_date
+		from calendar
+		where date_format(reg_date, '%Y-%m-%d')
+			between (SELECT ADDDATE(CURDATE(), - WEEKDAY(CURDATE()) + 0 ))
+			AND (SELECT ADDDATE(CURDATE(), - WEEKDAY(CURDATE()) + 6 ))
+	</select>
+
+</mapper>
