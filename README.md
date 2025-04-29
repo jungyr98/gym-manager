@@ -1,23 +1,25 @@
 
 # Gym Manager Project Backend 🥊📊
 
+➡️ 프론트엔드 Repository 바로가기 🔗 <a href="https://github.com/jungyr98/gym-manager-frontend" target="_blank">https://github.com/jungyr98/gym-manager-frontend</a>
+
 <!-- 프로젝트 결과물 -->
-* 로그인
+로그인
 ![image](https://github.com/user-attachments/assets/2bfd38f5-30c7-4316-9c49-43f0fd09adf8)
 
-* 대시보드
+대시보드
 ![image](https://github.com/user-attachments/assets/211e99a1-c1bb-41d2-973e-ab4c22cf143a)
 
-* 회원 목록
+회원 목록
 ![image](https://github.com/user-attachments/assets/f6f4c69a-5326-4c31-bd1d-6ce403e25ff2)
 
-* 회원 상세
+회원 상세
 ![image](https://github.com/user-attachments/assets/69381718-cdb3-4db2-a6f9-ed46c4b9acc3)
 
-* 캘린더
+캘린더
 ![image](https://github.com/user-attachments/assets/b539931f-b159-48fc-9922-5a3e37a56441)
 
-* 매출 통계
+매출 통계
 ![image](https://github.com/user-attachments/assets/499c6df9-21d7-4907-b7f9-e0a6a633e97b)
 
 
