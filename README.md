@@ -1,7 +1,7 @@
 
 # Gym Manager Project Backend 🥊📊
 
-➡️ 프론트엔드 Repository 바로가기 🔗 <a href="https://github.com/jungyr98/gym-manager-frontend" target="_blank">https://github.com/jungyr98/gym-manager-frontend</a>
+➡️ 🔗 <a href="https://github.com/jungyr98/gym-manager-frontend" target="_blank">프론트엔드 Repository 바로가기</a>
 
 <!-- 프로젝트 결과물 -->
 ![image](https://github.com/user-attachments/assets/211e99a1-c1bb-41d2-973e-ab4c22cf143a)
