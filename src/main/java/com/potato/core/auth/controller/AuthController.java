@@ -15,6 +15,7 @@ import com.potato.core.enums.ApiCodeEnum;
 import com.potato.core.vo.ResponseJson;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
+@Tag(name = "인증 API", description = "컨트롤러에 대한 설명입니다.")
 public class AuthController {
 
 	private final AuthService authService;

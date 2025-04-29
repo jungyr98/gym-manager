@@ -41,8 +41,6 @@
 		 left join payments_history PH on PH.membership_seq = MS.membership_seq
 		where YEAR(PH.reg_date) = #{year}
 		group by MS.membership_seq
-			   , MS.membership_name
-		       , PH.ph_price
 	</select>
 
 	<!-- 연령별 매출 통계 -->

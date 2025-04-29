@@ -15,10 +15,12 @@ import com.potato.member.pay.service.PaymentsHistoryService;
 import com.potato.member.pay.vo.PaymentsHistoryVO;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
+@Tag(name = "대시보드 API", description = "컨트롤러에 대한 설명입니다.")
 public class DashboardController {
 
 	private final PaymentsHistoryService paymentsHistoryService;

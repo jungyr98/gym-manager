@@ -15,10 +15,12 @@ import com.potato.visit.service.VisitService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
+@Tag(name = "방문 관리 API", description = "컨트롤러에 대한 설명입니다.")
 public class VisitController {
 
 	private final VisitService visitService;
@@ -36,7 +38,7 @@ public class VisitController {
 	}
 
 	@Operation(summary="회원별 방문 기록")
-	@GetMapping("/api/v1/visit/{memberSeq}")
+	@GetMapping("/api/v1/list/visit/{memberSeq}")
 	public ResponseEntity<ResponseJson<ResponseListVO<VisitHistory>>> selectMyVisitList(@PathVariable int memberSeq) {
 
 		return ResponseEntity.ok(ResponseJson.<ResponseListVO<VisitHistory>>builder()
