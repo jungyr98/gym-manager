@@ -18,7 +18,7 @@
   * Ant Design 라이브러리를 이용한 정돈된 UI
   * Apache ECharts 라이브러리를 이용한 각종 통계 차트
   * Recoil을 이용한 메뉴 상태 관리
-  * 대시보드, 회원 관리, 일정 관리, 방문 기록, 매출 통계 등 주 기능 존재
+  * 대시보드, 회원 관리, 일정 관리, 방문 기록, 메세지 전송, 매출 통계 등 주 기능 존재
 
 ## 📑 Spec
 
@@ -59,6 +59,9 @@
 캘린더
 ![image](https://github.com/user-attachments/assets/b539931f-b159-48fc-9922-5a3e37a56441)
 
+메세지 전송
+![image](https://github.com/user-attachments/assets/a55133c6-2ab7-4a4b-902e-e0f9a2b1dd9f)
+
 매출 통계
 ![image](https://github.com/user-attachments/assets/499c6df9-21d7-4907-b7f9-e0a6a633e97b)
 
@@ -74,9 +77,9 @@
 ```bash
 ── resources
    ├── common [공통]
-   │   └── config.properties [토큰 정보]
+   │   └── config.properties [토큰 정보 | CoolSMS KEY 정보]
    ├── local [로컬]
-   │   ├── config.properties [포트 및 스웨거 설정 정보]
+   │   ├── config.properties [포트 및 스웨거 설정 정보 | 파일 저장 경로]
    │   └── database.properties [DB 정보]
    └── application.properties
 ``` 
